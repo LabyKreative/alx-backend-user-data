@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Module of Users views
-"""
+"""Users views module"""
 import os
 from flask import jsonify, request
 from api.v1.views import app_views
@@ -9,11 +8,7 @@ from models.user import User
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def auth_session():
-    """
-    Handle user login
-    Return:
-        dictionary representation of user if found else error message
-    """
+    """Login User handler"""
     email = request.form.get('email')
     password = request.form.get('password')
     if email is None or email == '':
@@ -37,9 +32,7 @@ def auth_session():
 @app_views.route('/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
 def handle_logout():
-    """
-    Handle user logout
-    """
+    """Logout User handler"""
     from api.v1.app import auth
     if auth.destroy_session(request):
         return jsonify({}), 200
