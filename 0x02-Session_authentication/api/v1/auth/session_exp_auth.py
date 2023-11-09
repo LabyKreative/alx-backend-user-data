@@ -1,25 +1,14 @@
 #!/usr/bin/env python3
-"""
-Define SessionExpAuth class
-"""
+"""SessionExpAuth class"""
 import os
-from datetime import (
-    datetime,
-    timedelta
-)
-
+from datetime import datetime, timedelta
 from .session_auth import SessionAuth
 
 
 class SessionExpAuth(SessionAuth):
-    """
-    Definition of class SessionExpAuth that adds an
-    expiration date to a Session ID
-    """
+    """class SessionExpAuth that adds expiration date to a Session ID"""
     def __init__(self):
-        """
-        Initialize the class
-        """
+        """Initialize the class"""
         try:
             duration = int(os.getenv('SESSION_DURATION'))
         except Exception:
@@ -27,11 +16,7 @@ class SessionExpAuth(SessionAuth):
         self.session_duration = duration
 
     def create_session(self, user_id=None):
-        """
-        Create a Session ID for a user_id
-        Args:
-            user_id (str): user id
-        """
+        """Create a Session ID for a user_id"""
         session_id = super().create_session(user_id)
         if session_id is None:
             return None
@@ -43,13 +28,7 @@ class SessionExpAuth(SessionAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """
-        Returns a user ID based on a session ID
-        Args:
-            session_id (str): session ID
-        Return:
-            user id or None if session_id is None or not a string
-        """
+        """Returns a user ID based on a session ID"""
         if session_id is None:
             return None
         user_details = self.user_id_by_session_id.get(session_id)
